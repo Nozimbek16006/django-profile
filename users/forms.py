@@ -8,7 +8,14 @@ class RegisterForm(UserCreationForm):
         fields = ('username', 'email', 'password1', 'password2')
 
 class VerifyForm(forms.Form):
-    otp = forms.CharField(max_length=6)
+    otp = forms.CharField(
+        max_length=6,
+        widget=forms.TextInput(attrs={
+            'placeholder': 'Enter 6-digit OTP',
+            'class': 'form-control',
+            'autocomplete': 'one-time-code',
+        })
+    )
 
 class EditProfileForm(forms.ModelForm):
     class Meta :

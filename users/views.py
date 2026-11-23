@@ -23,12 +23,22 @@ class RegisterView(FormView):
 class VerifyView(FormView):
     form_class = VerifyForm
     template_name = 'users/verify.html'
-    success_url = reverse_lazy('profile')
+    success_url = reverse_lazy('login')
     def form_valid(self, form):
-        UserService.verify_otp(
-            form.cleaned_data['otp'],
+        is_verified = UserService.verify_otp(
+            form.cleaned_data['otp']
         )
-        return super().form_valid(form)
+        if is_verified:
+            messages.success(
+                self.request,
+                'Account created successfully! Your email has been verified.'
+            )
+            return super().form_valid(form)
+        messages.error(
+            self.request,
+            'Invalid or expired OTP. Please try again.'
+        )
+        return self.form_invalid(form)
 
 class ProfileView(LoginRequiredMixin, TemplateView):
     template_name = 'users/profile.html'
