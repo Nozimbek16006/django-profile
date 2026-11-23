@@ -23,11 +23,10 @@ class RegisterView(FormView):
 class VerifyView(FormView):
     form_class = VerifyForm
     template_name = 'users/verify.html'
-    success_url = reverse_lazy('login')
-
+    success_url = reverse_lazy('profile')
     def form_valid(self, form):
-        UserService.verify_user(
-            form.cleaned_data['otp']
+        UserService.verify_otp(
+            form.cleaned_data['otp'],
         )
         return super().form_valid(form)
 

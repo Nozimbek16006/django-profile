@@ -39,7 +39,7 @@ class UserService:
 
     @staticmethod
     @transaction.atomic
-    def verify_user(otp: str):
+    def verify_otp(otp: str):
         try:
             obj_otp = UserOTP.objects.select_for_update().get(
                 otp=otp,
@@ -50,7 +50,7 @@ class UserService:
         if obj_otp.created_at < timezone.localtime(timezone.now() - timedelta(minutes=5)):
             return False
         obj_otp.is_used = True
-        obj_otp.save(update_fields=['is_used'])
+        obj_otp.save(update_fields=["is_used"])
         obj_otp.user.is_active = True
-        obj_otp.user.save(update_fields=['is_active'])
+        obj_otp.user.save(update_fields=['is_used'])
         return True
