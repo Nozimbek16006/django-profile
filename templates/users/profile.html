@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %} Profile Sahifasi {% endblock %}
+
+{% block content %}
+    <p>Salom</p><h1>{{ user.username }}</h1>
+    <p>Email: {{ user.email }}</p>
+    <p>Qo'shilgan Sanasi: {{ user.date_joined }}</p>
+    {% if user.profile_image %}
+    <img src="{{ user.profile_image.url }}" alt="Profile Rasm">
+{% else %}
+    <img src="/static/images/default-avatar.png" alt="Default Rasm">
+{% endif %}
+    <a href="{% url 'edit_profile' %}">Taxrirlash</a> <br>
+    <a href="{% url 'change_password' %}">Parolni o'zgartirish</a>
+{% endblock %}
