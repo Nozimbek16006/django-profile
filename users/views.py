@@ -54,14 +54,6 @@ class EditProfileView(LoginRequiredMixin, UpdateView):
     def get_object(self):
         return self.request.user
 
-class EditProfileView(LoginRequiredMixin, UpdateView):
-    form_class = EditProfileForm
-    template_name = 'users/edit_profile.html'
-    success_url = reverse_lazy('profile')
-
-    def get_object(self):
-        return self.request.user
-
 class ChangePassword(LoginRequiredMixin, PasswordChangeView):
     template_name = 'users/change_password.html'
     success_url = reverse_lazy('password_change_done')
