@@ -6,8 +6,6 @@ from django.contrib import messages
 from .service import UserService
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-
-
 class RegisterView(CreateView):
     form_class = RegisterForm
     template_name = 'users/register.html'
@@ -29,13 +27,10 @@ class VerifyView(FormView):
 
     def form_valid(self, form):
         otp = form.cleaned_data['otp']
-
         success = UserService.verify_user(otp)
-
         if not success:
             form.add_error('otp', 'OTP is invalid or expired!')
             return self.form_invalid(form)
-
         return super().form_valid(form)
 
 class ProfileView(LoginRequiredMixin, TemplateView):
@@ -45,14 +40,6 @@ class ProfileView(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         context['user'] = self.request.user
         return context
-
-class EditProfileView(LoginRequiredMixin, UpdateView):
-    form_class = EditProfileForm
-    template_name = 'users/edit_profile.html'
-    success_url = reverse_lazy('profile')
-
-    def get_object(self):
-        return self.request.user
 
 class EditProfileView(LoginRequiredMixin, UpdateView):
     form_class = EditProfileForm
