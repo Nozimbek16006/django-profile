@@ -6,7 +6,7 @@ from django.contrib import messages
 from .service import UserService
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-class RegisterView(CreateView):
+class RegisterView(FormView):
     form_class = RegisterForm
     template_name = 'users/register.html'
     success_url = reverse_lazy('verify')
@@ -26,11 +26,9 @@ class VerifyView(FormView):
     success_url = reverse_lazy('login')
 
     def form_valid(self, form):
-        otp = form.cleaned_data['otp']
-        success = UserService.verify_user(otp)
-        if not success:
-            form.add_error('otp', 'OTP is invalid or expired!')
-            return self.form_invalid(form)
+        UserService.verify_user(
+            form.cleaned_data['otp']
+        )
         return super().form_valid(form)
 
 class ProfileView(LoginRequiredMixin, TemplateView):

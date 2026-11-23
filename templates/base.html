@@ -20,11 +20,14 @@
             <div class="collapse navbar-collapse" id="nav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="/">Bosh sahifa</a></li>
-                    <a href="{% url 'profile' %}" class="navbar-nav ms-auto">Profile</a>
 
                     {% if user.is_authenticated %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'profile' %}">{{ user.username }}</a></li>
-                        <li class="nav-item"><a href="{% url 'logout' %}" class="navbar-nav ms-auto">LogOut</a></li>
+                        <a href="{% url 'profile' %}" class="navbar-nav ms-auto">Profile</a>
+                        <form action="{% url 'logout' %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit">LogOut</button>
+                        </form>
                     {% else %}
                         <a href="{% url 'register' %}" class="navbar-nav ms-auto">Register</a>
                         <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Kirish</a></li>

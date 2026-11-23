@@ -8,7 +8,7 @@ urlpatterns = [
     path('verify/', VerifyView.as_view(), name='verify'),
     path('', ProfileView.as_view(), name='profile'),
     path('logout/', LogoutView.as_view(template_name='users/logout.html'), name='logout'),
-    path('edit-profile/', EditProfileView.as_view(), name='edit_profile'),
+    path('edit-profile/',EditProfileView.as_view(), name='edit_profile'),
     path('change-password/', ChangePassword.as_view(), name='change_password'),
     path('password-change-done/', PasswordChangeDone.as_view(), name='password_change_done'),
 ]

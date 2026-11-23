@@ -5,7 +5,7 @@ import uuid
 class CustomUser(AbstractUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     username = models.CharField(max_length=255, unique=True)
-    email = models.EmailField(unique=True)
+    email = models.EmailField()
     first_name = models.CharField(max_length=150, blank=True, null=True)
     last_name = models.CharField(max_length=150, blank=True, null=True)
     profile_image = models.ImageField(upload_to="profile_images/", blank=True, null=True)

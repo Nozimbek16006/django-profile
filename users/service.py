@@ -51,6 +51,6 @@ class UserService:
             return False
         obj_otp.is_used = True
         obj_otp.save(update_fields=['is_used'])
-        obj_otp.is_active = True
+        obj_otp.user.is_active = True
         obj_otp.user.save(update_fields=['is_active'])
         return True
